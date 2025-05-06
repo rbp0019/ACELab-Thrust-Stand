@@ -10,7 +10,7 @@ Servo esc;
 const int HX711_dout_1 = 4, HX711_sck_1 = 5;
 const int HX711_dout_2 = 6, HX711_sck_2 = 7;
 const int HX711_dout_3 = 8, HX711_sck_3 = 9;
-const int RPM_Sensor = 2;  // Changed to pin 2 (interrupt-capable on most Arduino boards)
+const int RPM_Sensor = 2;  
 
 // HX711 Constructor
 HX711_ADC LoadCell_1(HX711_dout_1, HX711_sck_1);
@@ -43,7 +43,7 @@ void setup() {
     pinMode(RPM_Sensor, INPUT);
     attachInterrupt(digitalPinToInterrupt(RPM_Sensor), countPulse, FALLING);  // Adjust FALLING/RISING based on your sensor
 
-    // Load cell calibration values
+    // Load cell calibration values. ------> CHANGE IF LOAD CELLS ARE CHANGED FOR CALIBRATION
     float calibrationValue_1 = 109.56;
     float calibrationValue_2 = 109.56;
     float calibrationValue_3 = 109.56;
@@ -67,7 +67,7 @@ void setup() {
     LoadCell_3.setCalFactor(calibrationValue_3);
     Serial.println("Startup complete");
 
-    esc.attach(11);
+    esc.attach(11); // ---------------> ESC MUST BE PLUGGED INTO DIGITAL PIN #11
     throttle = 800;
     esc.writeMicroseconds(throttle);
     delay(2000);
@@ -105,8 +105,10 @@ void loop() {
             float a = LoadCell_1.getData();
             float b = LoadCell_2.getData();
             float c = LoadCell_3.getData();
-            float Torque_add = abs(a) + abs(c);
-            float Torque = Torque_add * 9.81 * 0.03 / 1000;
+
+            // Torque Calculations
+            float Torque_add = abs(a) + abs(c);                
+            float Torque = Torque_add * 9.81 * 0.03 / 1000;    
             float Thrust_kg = b / 1000;
 
             unsigned long elapsedTime = Current_Time - startLoggingTime;
@@ -122,9 +124,9 @@ void loop() {
             Serial.print(",");
             Serial.print(rpm, 1);          // RPM
             Serial.print(",");
-            Serial.print(a, 4);           // Load cell 1
+            Serial.print(a, 4);           // Torque Load cell (Left, beind motor)
             Serial.print(",");
-            Serial.println(c, 4);         // Load cell 3
+            Serial.println(c, 4);         // Torque Load cell (Right, behind motor)
 
             newDataReady = false;
             t = millis();
