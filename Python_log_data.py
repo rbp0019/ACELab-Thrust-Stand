@@ -8,13 +8,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # Set up serial connection
-port = "/dev/tty.usbmodem101"  # Change based on your system
-baudrate = 57600
+port = "/dev/tty.usbmodem101"  # ------------> CHANGE BASED ON PERSONAL COMPUTER PORT
+baudrate = 57600 # BE SURE MATCHES ARDUINO CODE BAUD RATE
 ser = serial.Serial(port, baudrate, timeout=2)
 time.sleep(2)  # Allow Arduino to reset
 
 # Create/open CSV file
-filename = "thrust_data.csv"
+filename = "thrust_data.csv" # FEEL FREE TO CHANGE NAME OF FILE TO PREFERENCE
 file = open(filename, "w", newline="")
 csv_writer = csv.writer(file)
 csv_writer.writerow(["Time(ms)", "Thrust (kg)", "Torque (N*m)", "PWM", "RPM", "Cell2", "Cell3"])
