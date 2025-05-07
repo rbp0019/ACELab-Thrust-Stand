@@ -1,6 +1,6 @@
 # Arduino Thrust Stand Project
 
-This project is an Arduino-based thrust stand for testing brushless motor performance, measuring thrust, torque, RPM, voltage, and current. It’s designed for drone or RC enthusiasts to optimize motor and propeller combinations.
+This project is an Arduino-based thrust stand for testing brushless motor performance, measuring thrust, torque, RPM, voltage, and current. It’s designed for drone development in the ACE Lab at Auburn Univerisity, under the guidance of Dr. Eshan Taheri.
 
 ## Software
 - **Code Overview**: `ThrustStand.ino` controls the thrust stand, reading data from an HX711 load cell (thrust), Holybro PM06 power sensor (voltage/current), and an RPM sensor. It sends data via serial to a Python GUI for logging and visualization.
@@ -21,34 +21,21 @@ This project is an Arduino-based thrust stand for testing brushless motor perfor
 ## Hardware
 - **Components**:
   - Arduino Uno (or compatible board)
-  - HX711 load cell amplifier with 5kg or 10kg load cell
+  - HX711 load cell amplifier with 10kg load cell
   - Holybro PM06 power sensor (for voltage/current)
-  - Optical or hall-effect RPM sensor
+  - Optical RPM sensor
   - Brushless motor with ESC and propeller
   - Power supply (e.g., LiPo battery or bench supply)
 - **Wiring**:
-  - HX711: Connect to Arduino pins A0 (CLK), A1 (DOUT).
+  - HX711: Connect to Arduino digital pins.
   - PM06: Connect to analog pins A3 (voltage), A4 (current).
-  - RPM sensor: Connect to digital pin 2 (interrupt).
-  - ESC: Connect to digital pin 9 (PWM via Servo library).
+  - RPM sensor: Connect to digital pin 2.
+  - ESC: Connect to digital pin 11 (PWM via Servo library).
 - **Schematic**: ![Thrust Stand Setup](docs/schematic.png)
 - **Safety**:
   - Secure the motor and propeller to avoid vibration or detachment.
   - Use a stable power supply to prevent ESC damage.
   - Keep clear of the propeller during testing.
-
-## Future Development
-- **Planned Improvements**:
-  - Implement Kalman filtering in Arduino code to smooth thrust and RPM data (early tests in `kalman_test.ino`).
-  - Add Wi-Fi module (e.g., ESP8266) for wireless data logging.
-  - Support multiple motor sizes with adjustable mounts.
-- **Ideas**:
-  - Integrate with a mobile app for remote control and data display.
-  - Add torque sensor calibration for higher accuracy.
-  - Develop a 3D-printed enclosure for portability.
-- **Contributing**:
-  - Open an Issue to report bugs or suggest features.
-  - Fork the repository and submit pull requests for code improvements.
 
 ## License
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
